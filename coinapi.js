@@ -109,16 +109,20 @@ function getData(limit,offset){
                 coinsData+=`
                     <tr>
                         <td>${item[1].rank}</td>
-                        <td><img src="${item[1].iconUrl}" alt="" width="30" height="30"> &nbsp;${item[1].name} &nbsp; <span class="sym">${item[1].symbol}</span></td>
-                        <td>$${parseFloat(item[1].price)>1?parseFloat(item[1].price).toFixed(2):parseFloat(item[1].price).toFixed(8)} </td>
+                        <td>
+                            <a class="table-link" href="${item[1].coinrankingUrl}" target="_blank">
+                                <img src="${item[1].iconUrl}" alt="" width="30" height="30"> &nbsp;${item[1].name} &nbsp; <span class="sym">${item[1].symbol}</span>
+                            </a>
+                        </td>
+                        <td style="font-weight:500;">$${parseFloat(item[1].price)>1?parseFloat(item[1].price).toFixed(2):parseFloat(item[1].price).toFixed(8)} </td>
                         <td class="change priceChange">${item[1].change}%</td>
-                        <td>${item[1].marketCap}</td>
-                        <td>${item[1]["24hVolume"]}</td>
+                        <td style="font-weight:500;">${item[1].marketCap}</td>
+                        <td style="font-weight:500;">${item[1]["24hVolume"]}</td>
                     </tr>
                 `
             })
             
-            document.getElementById('loader').style.display="none"
+            document.getElementById('loader').style.display="none";
             document.querySelector('#coins tbody').innerHTML=coinsData;
             setColorChanges();
         })
