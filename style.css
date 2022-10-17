@@ -43,3 +43,15 @@ li{
     border: 1px solid black;
     margin: 1px;
 }
+
+.download-options{
+    display: flex;
+    justify-content: end;
+}
+.download-options .options{
+    margin: 1rem;
+}
+.btn{
+    text-align: center;
+    height: fit-content;
+}

@@ -1,3 +1,5 @@
+// const { html2pdf } = require("./html2pdf.bundle.min");
+
 const options = {
 	method: 'GET',
 	headers: {
@@ -104,8 +106,6 @@ function getData(limit,offset){
             let coinsData="";
             Object.entries(response.data.coins).forEach(item => {
                 let price = parseFloat(item[1].price).toFixed(2);
-                
-
                 coinsData+=`
                     <tr>
                         <td>${item[1].rank}</td>
@@ -125,11 +125,12 @@ function getData(limit,offset){
             document.getElementById('loader').style.display="none";
             document.querySelector('#coins tbody').innerHTML=coinsData;
             setColorChanges();
+            
         })
 
         .catch(err => console.error(err));
     }, 2000);
-
+    download();
     return interval
 }
 
@@ -199,3 +200,34 @@ input.addEventListener("input",(e)=>{
     console.log(e.target.value);
 })
 
+
+
+// functionality for downloading data
+function download(){
+    
+    let options = document.querySelectorAll('input[name="options"]');
+    let download = document.querySelector('.download')
+    download.addEventListener('click',()=>{
+        let a = options[0];
+        let b = options[1];
+        if(a.checked){
+            // implement to download as pdf
+            let coins = document.querySelector(".table");
+            var opt = {
+                margin:       1,
+                filename:     'coins-data.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+              };
+
+               html2pdf(coins,opt);
+        }
+        else{
+            // implement to download as excel sheet
+            var table2excel = new Table2Excel();
+            table2excel.export(document.querySelector(".table"));
+        }
+    })
+
+}
